@@ -22,22 +22,69 @@ function endPosition() {
     ctx.beginPath();
 }
 
+let eraserMode = false;
+
+document.getElementById('eraserTool').addEventListener('click', () => {
+    eraserMode = !eraserMode;
+    if (eraserMode) {
+        document.getElementById('eraserTool').style.backgroundColor = '#ffcc00';
+    } else {
+        document.getElementById('eraserTool').style.backgroundColor = '';
+    }
+});
+
+let history = [];
+let historyIndex = -1;
+
+// Function to save the current state of the canvas to history
+function saveHistory() {
+    if (historyIndex < history.length - 1) {
+        history = history.slice(0, historyIndex + 1);
+    }
+    history.push(canvas.toDataURL());
+    historyIndex++;
+}
+
+document.getElementById('undoButton').addEventListener('click', () => {
+    if (historyIndex > 0) {
+        historyIndex--;
+        let undoState = new Image();
+        undoState.src = history[historyIndex];
+        undoState.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(undoState, 0, 0);
+        };
+    }
+});
+
 function draw(e) {
     if (!painting) return;
 
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     ctx.lineWidth = brushSize;
     ctx.lineCap = 'round';
     ctx.lineTo(x, y);
-    ctx.strokeStyle = brushColor;
+
+    if (eraserMode) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.strokeStyle = '#000000';
+    } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = brushColor;
+    }
+
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(x, y);
 
     createParticles(x, y);
+
+    if (!eraserMode) {
+        saveHistory();
+    }
 }
 
 function createParticles(x, y) {
@@ -60,6 +107,8 @@ canvas.addEventListener('mousemove', draw);
 
 document.getElementById('clearCanvas').addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    history = [];
+    historyIndex = -1;
 });
 
 document.getElementById('brush-size-container').addEventListener('click', () => {
