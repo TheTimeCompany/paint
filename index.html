@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuxPaint</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Floating Toolbar -->
+        <div class="tools">
+            <button id="clearCanvas" title="Clear Canvas"><i class="fas fa-eraser"></i></button>
+            <button id="color-picker-button" title="Pick Brush Color">
+                <i class="fas fa-palette"></i>
+            </button>
+            <div id="brush-size-container" class="brush-size-control" title="Adjust Brush Size">
+                <i class="fas fa-paintbrush"></i>
+            </div>
+            <div id="brush-slider-container">
+                <input type="range" id="brush-slider" min="5" max="50" step="1" value="5" oninput="changeBrushSize(this.value)">
+                <span id="brush-size-preview">5px</span>
+            </div>
+        </div>
+      
+        <div class="canvas-container">
+            <canvas id="paintCanvas"><!-- Painting Canvas --></canvas>
+        </div>
+
+        <div class="footer">
+            <p>&copy; MuxPaint by MuxAI, 2025</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
