@@ -63,6 +63,16 @@ canvas {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
+#eraserTool:hover {
+    background: linear-gradient(135deg, rgba(25, 25, 25, 0.5), rgba(55, 55, 55, 0.5));
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+#undoButton:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 0, 0.5));
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
 #clearCanvas:hover {
     background: linear-gradient(135deg, rgba(255, 0, 255, 0.5), rgba(255, 255, 0, 0.5));
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
@@ -71,7 +81,8 @@ canvas {
 #brush-slider-container {
     display: none;
     position: absolute;
-    top: -70px;
+    top: 250px;
+    left: 70px;
     background: rgba(0, 0, 0, 0.7);
     padding: 10px;
     border-radius: 8px;
@@ -130,6 +141,8 @@ canvas {
         top: -100px;
     }
 }
+
+
 
 .particle {
     position: absolute;
